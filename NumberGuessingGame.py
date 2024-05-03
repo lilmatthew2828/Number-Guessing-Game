@@ -1,78 +1,53 @@
-import random
-import math
-from tabulate import tabulate
-import numpy
-import pandas
 '''
 Matthew Kilpatrick
 5/2/24
-Word Guessing Mini Game
+Mini Project 1
+Number Guessing Game
 '''
 
-class WordGuesser:
+import numpy
+import pandas
+import random
+import pygame
+from tabulate import tabulate
+import matplotlib.pyplot as plt
+from collections import deque
+import tkinter as tk
+import math
+
+print("Welcome to my number guessing game")
+'''
+Steps into building the program are as follows: 
+    Build a Number guessing game, in which the user selects a range.
+    Let’s say User selected a range, i.e., from A to B, where A and B belong to Integer.
+    Some random integer will be selected by the system and the user has to guess that integer in the minimum number of guesses
+'''
+class NumberGuessingGame:
     def __init__(self):
-        self.name = str(input("What your full name: "))
-        self.words = ["Machew", "Raven", 'rainbow', 'computer', 'science', 'programming',
-                      'python', 'mathematics', 'player', 'condition',
-                      'reverse', 'water', 'board', 'geeks']
-        self.random_word = None
-        self.list_of_characters = []
-        self.dick = {}
-        self.index_list = []
-    def dictionary_Work(self):
-        count = 0
-        for words in self.words:
-            self.index_list.append(count)
-            count += 1
-
-        for words in self.words:
-            self.dick.update({words:len(words)})
-        print(tabulate(self.dick.items(),headers=["Words","Lengths"],showindex=self.index_list, tablefmt='pretty'))
-
-    def generate_rand_word (self):
-        self.random_word = random.choice(self.words)
-        self.list_of_characters.extend(self.random_word)
-        print(self.list_of_characters)
-
-    def guess_Word(self):
-
-        def num_of_char_correct(users_guess):
-            num_correct = 0
-            if (users_guess == self.random_word):
-                print("OMG, 😁 YOU GOT IT RIGHT 🥹 ")
-                print("I ❤️ LUCKI!!!\n")
-            else:
-                for chars in users_guess:
-                    if chars in self.list_of_characters:
-                        num_correct += 1
-                print(f"\t℗ You got {num_correct} characters correct!!")
-                num_correct = 0
-
-        # def is_correct(users_guess): # this function will end the program if the user enters the correct guess
-        #     correct = False
-        #     if(users_guess == self.random_word):
-        #         print("OMG, ☺︎YOU GOT IT RIGHT☺︎ ")
-        #         print("LUCKI IS MY KING!!!\n")
-
-        number_of_guesses = 0
-        number_of_guesses_left = 12 # a total of 12 guesses
-        print("⬆︎ Above is the words that you need to be gussing from ⬆︎")
-        guess = str(input("Guess your word: "))
-        # is_correct(users_guess=guess)
-        num_of_char_correct(users_guess=guess)
-        number_of_guesses_left -= 1
-        number_of_guesses += 1
-        print(f"\t ☢ You have #{number_of_guesses_left} guesses left ☢")
-        print("-----------------------------------------")
-        while (number_of_guesses != 12 and guess != self.random_word):
-            guess = str(input("Wrong, Guess your word again: "))
-            # is_correct(users_guess=guess)
-            num_of_char_correct(users_guess=guess)
-            number_of_guesses_left -= 1
-            number_of_guesses += 1
-            print(f"You have #{number_of_guesses_left} guesses left")
-            num_of_chars_correct = 0
-        print(f"The word that was randomly selected: {self.random_word}")
+        self.name = str(input("Enter your name: "))
+        self.minimum = int(input("Enter a minimum range for the random number: "))
+        self.maximum = int(input("Enter a maximum range for the random number: "))
+        self.random_number = random.randint(self.minimum,self.maximum)
+    def start_the_guessing_game(self):
+        print(f"\n{self.name.upper()} Now we will start the guessing game!!!\n"
+              f"\tRemeber that the number you are trying to guess is between {self.minimum} and {self.maximum}")
+        guess = int(input("Enter your guess here, you get 5 guesses: "))
+        if (guess > self.random_number):
+            print("To high!!!")
+        elif (guess < self.random_number):
+            print("To low!!!")
+        number_of_guess = 0
+        num_of_guess_left = 5
+        correct = False
+        while guess != self.random_number and number_of_guess != 5:
+            guess = int(input(f"Wrong Luh Nigga, Try again, {num_of_guess_left-1} guess left: "))
+            if (guess > self.random_number):
+                print("To high!!!")
+            elif (guess < self.random_number):
+                print("To low!!!")
+            number_of_guess += 1
+            num_of_guess_left -= 1
+        print(f"The Random Number that was generated: {self.random_number}")
 
 
 
