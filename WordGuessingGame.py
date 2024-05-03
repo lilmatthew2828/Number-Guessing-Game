@@ -1,5 +1,8 @@
 import random
 import math
+from tabulate import tabulate
+import numpy
+import pandas
 '''
 Matthew Kilpatrick
 5/2/24
@@ -14,6 +17,17 @@ class WordGuesser:
                       'reverse', 'water', 'board', 'geeks']
         self.random_word = None
         self.list_of_characters = []
+        self.dick = {}
+        self.index_list = []
+    def dictionary_Work(self):
+        count = 0
+        for words in self.words:
+            self.index_list.append(count)
+            count += 1
+
+        for words in self.words:
+            self.dick.update({words:len(words)})
+        print(tabulate(self.dick.items(),headers=["Words","Lengths"],showindex=self.index_list, tablefmt='pretty'))
 
     def generate_rand_word (self):
         self.random_word = random.choice(self.words)
@@ -42,9 +56,7 @@ class WordGuesser:
 
         number_of_guesses = 0
         number_of_guesses_left = 12 # a total of 12 guesses
-        print("The List Of Random Words: ")
-        for words in self.words:
-            print(f"\t{words}")
+        print("⬆︎ Above is the words that you need to be gussing from ⬆︎")
         guess = str(input("Guess your word: "))
         # is_correct(users_guess=guess)
         num_of_char_correct(users_guess=guess)
